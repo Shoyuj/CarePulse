@@ -72,14 +72,10 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        List<String> origins = Arrays.asList(allowedOrigins.split(","));
-        if (origins.contains("*") || origins.contains("https://*")) {
-            configuration.addAllowedOriginPattern("*");
-        } else {
-            configuration.setAllowedOrigins(origins);
-        }
+        // Allow all origin patterns (supports Netlify, localhost, Vercel, custom domains with credentials)
+        configuration.addAllowedOriginPattern("*");
 
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization"));
         configuration.setAllowCredentials(true);
