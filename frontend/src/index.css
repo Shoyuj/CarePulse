@@ -801,3 +801,269 @@ button, input, select, textarea {
   color: var(--text-muted);
 }
 
+/* ========================================================= */
+/* SMARTPHONE & RESPONSIVE MOBILE OPTIMIZATIONS              */
+/* ========================================================= */
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Mobile Nav Toggle Button */
+.mobile-nav-toggle {
+  display: none;
+  background: var(--palette-cream);
+  border: 1px solid var(--palette-slate-border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.mobile-nav-toggle:hover {
+  background: var(--palette-slate-light);
+  border-color: var(--palette-terracotta);
+}
+
+/* Mobile Dropdown Drawer */
+.mobile-nav-drawer {
+  display: none;
+}
+
+/* Mobile Bottom Navigation Bar (App Style) */
+.mobile-bottom-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1.5px solid var(--palette-slate-border);
+  box-shadow: 0 -4px 20px rgba(71, 85, 105, 0.08);
+  z-index: 600;
+  padding: 0 0.5rem;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  align-items: center;
+  justify-content: space-around;
+}
+
+.mobile-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.35rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-md);
+  flex: 1;
+  max-width: 80px;
+}
+
+.mobile-tab-btn.active {
+  color: var(--palette-terracotta-dark);
+}
+
+.mobile-tab-btn.active .mobile-tab-icon {
+  transform: translateY(-2px);
+  color: var(--palette-terracotta);
+}
+
+.mobile-tab-icon {
+  transition: transform var(--transition-fast);
+}
+
+/* Scrollable Horizontal Pill Tabs */
+.scrollable-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.35rem;
+  scrollbar-width: none;
+}
+
+.scrollable-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Mobile Media Queries (< 768px) --- */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .mobile-nav-toggle {
+    display: flex !important;
+  }
+
+  .mobile-nav-drawer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem 1.5rem;
+    background: #FFFFFF;
+    border-bottom: 1.5px solid var(--palette-slate-border);
+    box-shadow: 0 10px 25px rgba(71, 85, 105, 0.1);
+    animation: slideDown 0.2s ease-out;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .mobile-bottom-bar {
+    display: flex !important;
+  }
+
+  .main-content {
+    padding: 1rem 1rem 5.5rem !important;
+  }
+
+  .site-footer {
+    margin-bottom: 4.5rem;
+    padding: 2rem 1rem 1.5rem;
+  }
+
+  .docgenie-hero {
+    padding: 1.75rem 1.25rem !important;
+    border-radius: var(--radius-lg) !important;
+    margin-bottom: 1.75rem !important;
+  }
+
+  .docgenie-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .docgenie-hero h1 {
+    font-size: 1.9rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .doctors-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  /* Specialty Horizontal Swipe on Mobile */
+  .specialty-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    scrollbar-width: none;
+  }
+
+  .specialty-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .specialty-card {
+    min-width: 120px !important;
+    flex-shrink: 0 !important;
+    padding: 0.85rem 0.5rem !important;
+  }
+
+  .specialty-icon-circle {
+    width: 44px !important;
+    height: 44px !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Modals on Mobile */
+  .modal-overlay {
+    padding: 0.75rem !important;
+    align-items: flex-end !important;
+  }
+
+  .modal-card {
+    max-height: 88vh !important;
+    border-radius: 20px 20px 0 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .modal-header {
+    padding: 1rem 1.25rem !important;
+  }
+
+  .modal-body {
+    padding: 1.25rem 1rem !important;
+  }
+
+  .modal-footer {
+    padding: 1rem 1.25rem !important;
+    flex-direction: column-reverse !important;
+    gap: 0.6rem !important;
+  }
+
+  .modal-footer button {
+    width: 100% !important;
+  }
+
+  /* Slot Grid on Mobile */
+  .slot-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+    gap: 0.5rem !important;
+  }
+
+  .slot-pill {
+    padding: 0.5rem 0.35rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Form Elements Prevent iOS Zoom */
+  .form-input, .form-select, .form-textarea {
+    font-size: 16px !important;
+    padding: 0.7rem 0.85rem !important;
+  }
+
+  /* Toast Notification on Mobile */
+  .toast-container {
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    bottom: 4.5rem !important;
+    max-width: calc(100% - 1.5rem) !important;
+  }
+
+  .toast-item {
+    min-width: unset !important;
+    width: 100% !important;
+  }
+}
+
+/* Extra Small Screens (< 480px) */
+@media (max-width: 480px) {
+  .docgenie-hero h1 {
+    font-size: 1.65rem !important;
+  }
+
+  .docgenie-hero {
+    padding: 1.35rem 1rem !important;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+

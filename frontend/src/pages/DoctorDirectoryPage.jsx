@@ -337,7 +337,7 @@ export default function DoctorDirectoryPage({ onBookDoctor }) {
           </p>
         </div>
 
-        <div className="specialty-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(135px, 1fr))' }}>
+        <div className="specialty-grid">
           {SPECIALTIES.map((spec) => {
             const IconComp = spec.icon;
             const isSelected = selectedSpecialty === spec.id;
@@ -452,7 +452,7 @@ export default function DoctorDirectoryPage({ onBookDoctor }) {
           </button>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
+        <div className="doctors-grid">
           {filteredDoctors.map((doc) => {
             const docName = doc.fullName || doc.doctorName || 'Doctor';
             const qualifications = doc.qualification || doc.qualifications || 'Certified Medical Practitioner';

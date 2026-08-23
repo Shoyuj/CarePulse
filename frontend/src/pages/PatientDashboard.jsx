@@ -128,7 +128,7 @@ export default function PatientDashboard({ onBrowseDoctors, onViewPrescriptions 
         {/* Left Column: Appointments List */}
         <div>
           {/* Filter Tabs */}
-          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+          <div className="scrollable-tabs" style={{ marginBottom: '1.5rem' }}>
             {['ALL', 'UPCOMING', 'COMPLETED', 'CANCELLED'].map((tab) => (
               <button
                 key={tab}
