@@ -22,6 +22,7 @@ backend/.mvn/wrapper/maven-wrapper.jar
 *.class
 *.jar
 *.war
+*.zip
 
 # =============================================================================
 # FRONTEND - Node & Vite Build Outputs
