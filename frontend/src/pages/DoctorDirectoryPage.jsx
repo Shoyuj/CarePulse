@@ -6,7 +6,7 @@ import { formatTime, formatInr } from '../utils/formatters';
 import { 
   Search, Stethoscope, Clock, Calendar, Award, ChevronRight, 
   Sparkles, CheckCircle2, ShieldCheck, Zap, HeartPulse, X, Activity, 
-  Heart, User, MapPin, Building2
+  Heart, User, MapPin, Building2, AlertCircle, RefreshCw
 } from 'lucide-react';
 
 const SPECIALTIES = [
@@ -47,15 +47,19 @@ export default function DoctorDirectoryPage({ onBookDoctor }) {
   const [search, setSearch] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('ALL');
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
   const { addToast } = useToast();
 
   const fetchDoctors = async (query = '') => {
     setLoading(true);
+    setFetchError(null);
     try {
       const data = await doctorApi.getAll(query);
       setDoctors(data || []);
+      setFetchError(null);
     } catch (err) {
-      addToast(err.message || 'Failed to fetch doctors list', 'error');
+      setFetchError(err.message || 'Unable to load doctors from server.');
+      setDoctors([]);
     } finally {
       setLoading(false);
     }
@@ -439,8 +443,26 @@ export default function DoctorDirectoryPage({ onBookDoctor }) {
 
       {/* Doctors Grid */}
       {loading ? (
-        <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-          Loading Dehradun healthcare specialists...
+        <div className="glass-panel" style={{ padding: '3.5rem 2rem', textAlign: 'center', background: '#FFFFFF', margin: '2rem 0' }}>
+          <div style={{ width: '44px', height: '44px', border: '3.5px solid var(--palette-slate-border)', borderTopColor: 'var(--palette-terracotta)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 1.25rem' }} />
+          <h3 style={{ fontSize: '1.25rem', marginBottom: '0.4rem', color: 'var(--text-primary)' }}>Loading Dehradun Healthcare Specialists...</h3>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', maxWidth: '440px', margin: '0 auto' }}>
+            Connecting to real-time doctor schedule. If the cloud server was sleeping, it may take ~30s on first load.
+          </p>
+        </div>
+      ) : fetchError ? (
+        <div className="glass-panel" style={{ padding: '3rem 2rem', textAlign: 'center', background: '#FFFFFF', margin: '2rem 0', border: '1.5px solid #FECACA' }}>
+          <AlertCircle size={44} color="#EF4444" style={{ margin: '0 auto 1rem' }} />
+          <h3 style={{ fontSize: '1.25rem', marginBottom: '0.4rem', color: '#DC2626' }}>Connecting to Healthcare Server...</h3>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', maxWidth: '480px', margin: '0 auto 1.25rem' }}>
+            {fetchError.includes('Failed to fetch') 
+              ? 'The free cloud backend instance (Render) is waking up from idle mode. Please click retry below.'
+              : fetchError}
+          </p>
+          <button onClick={() => fetchDoctors(search)} className="btn btn-primary" style={{ gap: '0.5rem', margin: '0 auto' }}>
+            <RefreshCw size={16} />
+            <span>Retry Connection</span>
+          </button>
         </div>
       ) : filteredDoctors.length === 0 ? (
         <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', background: '#FFFFFF' }}>
