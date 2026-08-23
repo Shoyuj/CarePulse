@@ -4,14 +4,14 @@
 
 ---
 
-## 🌐 Live Project Link
+## Live Project Link
 
 * **Live Frontend**: [https://carepulseify.netlify.app](https://carepulseify.netlify.app)
 * **GitHub Repository**: [https://github.com/Shoyuj/CarePulse](https://github.com/Shoyuj/CarePulse)
 
 ---
 
-## 💡 About The Project
+## About The Project
 
 Most clinic booking systems are just basic forms that don't solve real problems patients and doctors face every day. I built **CarePulse** to handle the entire consultation cycle from start to finish:
 
@@ -24,7 +24,7 @@ Most clinic booking systems are just basic forms that don't solve real problems 
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Backend**: Java 17, Spring Boot 3.3, Spring Data JPA, Spring Security with JWT tokens, Hibernate, H2 / PostgreSQL.
 * **Frontend**: React 18, Vite, Vanilla CSS design system, Lucide Icons.
@@ -33,7 +33,7 @@ Most clinic booking systems are just basic forms that don't solve real problems 
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
 ### Prerequisites
 * Java 17+ (JDK)
@@ -76,7 +76,7 @@ npm run dev
 
 ---
 
-## 🔑 Demo Accounts
+## Demo Accounts
 
 The database comes pre-seeded with test accounts for each role:
 
@@ -90,7 +90,7 @@ The database comes pre-seeded with test accounts for each role:
 
 ---
 
-## 📑 Database Schema
+## Database Schema
 
 ```
 +-----------------------------------------------------------------------------------+
@@ -179,7 +179,7 @@ The database comes pre-seeded with test accounts for each role:
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Authentication (`/api/auth`)
 * `POST /api/auth/register` — Register a new patient or doctor account.
@@ -208,7 +208,7 @@ The database comes pre-seeded with test accounts for each role:
 
 ---
 
-## 🤖 Gemini AI Prompts & Fallback Strategy
+## Gemini AI Prompts & Fallback Strategy
 
 ### 1. Pre-Visit Clinical Triage Prompt
 ```text
@@ -254,7 +254,7 @@ You MUST return ONLY a valid JSON object strictly matching this schema with no m
 
 ---
 
-## 📅 Google Calendar Setup
+## Google Calendar Setup
 
 The app offers two ways to sync appointments:
 
@@ -272,7 +272,7 @@ The app offers two ways to sync appointments:
 
 ---
 
-## 📐 System Design
+## System Design
 
 ### 1. Concurrency Control & Double-Booking Prevention
 To prevent two patients from booking the same doctor slot at the exact same millisecond, CarePulse uses a **two-phase reservation model**:
@@ -298,7 +298,7 @@ When an admin marks a doctor on leave (`POST /api/admin/doctors/{id}/leave`):
 
 ---
 
-## 🧪 Testing
+## Testing
 
 To run the automated tests verifying slot holds, leave conflicts, and rate limiting:
 ```bash
@@ -309,5 +309,5 @@ cd backend
 
 ---
 
-## 📄 License
+## License
 This project is open-source under the [MIT License](LICENSE).
