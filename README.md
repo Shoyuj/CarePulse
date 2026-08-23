@@ -1,63 +1,53 @@
 # 🏥 CarePulse - Healthcare Appointment & Follow-up Manager
 
-> An enterprise-grade, full-stack healthcare scheduling and clinical follow-up platform built with **Spring Boot 3 (Java 17)**, **React 18 (Vite)**, and **Google Gemini 3.6 Flash AI**.
+> A full-stack healthcare scheduling and patient follow-up web app built with **Spring Boot (Java 17)**, **React 18 (Vite)**, and **Google Gemini AI**.
 
 ---
 
-## 🌐 Hosted Live Application
+## 🌐 Live Project Link
 
-* **Frontend UI (Netlify)**: [https://carepulseify.netlify.app](https://carepulseify.netlify.app) *(or your Netlify URL)*
-* **Backend API (Render)**: [https://carepulse-healthcare-backend.onrender.com](https://carepulse-healthcare-backend.onrender.com)
-* **API Health Check**: [https://carepulse-healthcare-backend.onrender.com/api/health](https://carepulse-healthcare-backend.onrender.com/api/health)
-* **GitHub Repository**: [https://github.com/Shoyuj/CarePulse](https://github.com/Shoyuj/CarePulse) *(Branch: `main`)*
+* **Live Frontend**: [https://carepulseify.netlify.app](https://carepulseify.netlify.app)
+* **GitHub Repository**: [https://github.com/Shoyuj/CarePulse](https://github.com/Shoyuj/CarePulse)
 
 ---
 
-## ✨ Core Features & Capabilities
+## 💡 About The Project
 
-1. **Role-Based Portals**:
-   * **Patient Portal**: Instant symptom search, real-time slot selection, 5-minute atomic hold lock, pre-visit Gemini AI triage, ICS calendar download, Google Calendar sync, and active medication adherence tracking.
-   * **Doctor Portal**: Daily schedule overview, real-time clinical intake briefing with AI urgency level, consultation note submission, digital prescription generation with plain-English medication schedules.
-   * **Admin Portal**: Doctor lifecycle management, specialty classification, working hour configuration, consultation fee setup, and doctor leave scheduling.
-2. **Dehradun Regional Healthcare Ecosystem**:
-   * Pre-seeded with **24 specialist doctors** across Dehradun (Cardiology, Dermatology, Orthopedics, Pediatrics, Neurology, etc.) and **50 Indian patients** with INR pricing.
-3. **Concurrency-Safe 5-Minute Slot Hold**:
-   * Prevents double-booking via atomic serialized holds, background expiration reclamation, and time-of-day restrictions against past slots.
-4. **Google Gemini 3.6 Flash AI Integration**:
-   * **Pre-Visit Clinical Triage**: Classifies urgency (`Low`, `Medium`, `High`), synthesizes chief complaints, and generates targeted doctor discussion points.
-   * **Post-Visit Patient Summary**: Translates clinical diagnoses and complex dosage schedules into 5th-grade plain English with warning signs and follow-up milestones.
-   * **Graceful Degradation & Quota Shield**: Automated rule-based fallbacks on rate limits or API downtime.
-5. **Doctor Leave Conflict Resolution**:
-   * Automatically cancels conflicting appointments and dispatches urgent email notifications when a doctor marks leave.
-6. **Medication Adherence Engine**:
-   * Scheduled cron evaluations send automated medication reminders to patients based on prescription frequencies.
+Most clinic booking systems are just basic forms that don't solve real problems patients and doctors face every day. I built **CarePulse** to handle the entire consultation cycle from start to finish:
+
+1. **Smart Clinical Search & Booking**: Patients can search doctors by symptoms (e.g. fever, dengue, knee pain, acne) or specialization across a network of 24 Dehradun doctors with standard INR fees.
+2. **5-Minute Concurrency Slot Hold**: When a patient selects a time slot, the system locks it for 5 minutes with a live countdown so nobody else can take it while they type their symptoms. It also disables past time slots for today.
+3. **Pre-Visit AI Triage (Gemini 3.6 Flash)**: Before the consultation happens, Gemini analyzes the patient's symptoms, assigns an urgency level (`Low`, `Medium`, `High`), writes a clear chief complaint summary, and gives the doctor 3 key clinical questions to ask.
+4. **Post-Visit Patient Summary & Digital Rx**: Doctors write their clinical notes and prescriptions in the portal. The AI then translates complex medical jargon into a simple, easy-to-understand summary with dosage schedules, warning signs, and follow-up steps.
+5. **Doctor Leave & Conflict Management**: If a doctor takes leave on a day with existing bookings, the system automatically cancels conflicting appointments and notifies the affected patients.
+6. **Medication Reminders & Calendar Sync**: Generates one-click Google Calendar links, downloadable `.ics` calendar files, and runs background cron tasks for daily medication reminders.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Backend**: Java 17, Spring Boot 3.3.0, Spring Data JPA, Spring Security (Stateless JWT), Hibernate, PostgreSQL / H2 In-Memory DB.
-* **Frontend**: React 18, Vite, Vanilla CSS Design System, Lucide React Icons.
-* **AI Engine**: Google Gemini 3.6 Flash API (`gemini-3.6-flash`).
-* **Deployment**: Docker, Render.com (Backend Web Service), Netlify (Frontend SPA).
+* **Backend**: Java 17, Spring Boot 3.3, Spring Data JPA, Spring Security with JWT tokens, Hibernate, H2 / PostgreSQL.
+* **Frontend**: React 18, Vite, Vanilla CSS design system, Lucide Icons.
+* **AI Model**: Google Gemini 3.6 Flash (`gemini-3.6-flash`).
+* **Deployment**: Netlify (Frontend SPA) and Render (Backend Docker service).
 
 ---
 
-## 🚀 Local Setup & Installation
+## 🚀 Running Locally
 
 ### Prerequisites
-* **Java 17+ (JDK)** installed
-* **Node.js 18+** & `npm` installed
-* **Git**
+* Java 17+ (JDK)
+* Node.js 18+ and `npm`
+* Git
 
-### 1. Clone the Repository
+### 1. Clone the repo
 ```bash
 git clone https://github.com/Shoyuj/CarePulse.git
 cd CarePulse
 ```
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env`:
+### 2. Set up environment variables
+Copy the example file to `.env`:
 ```bash
 cp .env.example .env
 ```
@@ -67,38 +57,40 @@ GEMINI_API_KEY=your_gemini_api_key_here
 GEMINI_MODEL=gemini-3.6-flash
 ```
 
-### 3. Run Backend (Spring Boot)
+### 3. Start the Backend (Spring Boot)
 ```bash
 cd backend
 ./mvnw clean spring-boot:run
 ```
-* Backend starts at `http://localhost:8080`
-* H2 Database Console: `http://localhost:8080/h2-console` (`JDBC URL: jdbc:h2:mem:healthcaredb`, `User: sa`, `Password: `)
+* API server will run on `http://localhost:8080`
+* In-memory H2 Console is available at `http://localhost:8080/h2-console` (`JDBC URL: jdbc:h2:mem:healthcaredb`, `User: sa`, `Password: `)
 
-### 4. Run Frontend (React Vite)
-In a new terminal:
+### 4. Start the Frontend (React Vite)
+In a separate terminal tab:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-* Frontend starts at `http://localhost:5173`
+* App will run on `http://localhost:5173`
 
 ---
 
-## 🔑 Demo Login Accounts
+## 🔑 Demo Accounts
 
-| Role | Email | Password | Details |
+The database comes pre-seeded with test accounts for each role:
+
+| Role | Email | Password | What to Test |
 |---|---|---|---|
-| **Admin** | `admin@healthcare.com` | `admin123` | Full clinic & doctor management |
-| **Doctor** | `dr.rawat@healthcare.com` | `doctor123` | Cardiologist, Dehradun Heart Institute |
-| **Doctor** | `dr.semwal@healthcare.com` | `doctor123` | Dermatologist, Rajpur Road Skin Clinic |
-| **Patient** | `rahul.sharma@gmail.com` | `patient123` | Registered Patient |
-| **Patient** | `priya.verma@gmail.com` | `patient123` | Active Prescriptions & Reminders |
+| **Admin** | `admin@healthcare.com` | `admin123` | Add new doctors, mark doctor leaves, view stats |
+| **Doctor** | `dr.rawat@healthcare.com` | `doctor123` | View patient queue, see AI triage, write prescriptions |
+| **Doctor** | `dr.semwal@healthcare.com` | `doctor123` | Dermatologist consultations |
+| **Patient** | `rahul.sharma@gmail.com` | `patient123` | Book new appointments, view calendar invites |
+| **Patient** | `priya.verma@gmail.com` | `patient123` | View active prescriptions & medication reminders |
 
 ---
 
-## 📑 Database Schema Design
+## 📑 Database Schema
 
 ```
 +-----------------------------------------------------------------------------------+
@@ -187,36 +179,36 @@ npm run dev
 
 ---
 
-## 📡 REST API Documentation
+## 📡 API Endpoints
 
 ### Authentication (`/api/auth`)
-* `POST /api/auth/register` — Register a new patient or doctor.
-* `POST /api/auth/login` — Authenticate and receive JWT Bearer token.
-* `GET /api/auth/me` — Retrieve current authenticated user profile.
+* `POST /api/auth/register` — Register a new patient or doctor account.
+* `POST /api/auth/login` — Sign in and get a JWT token.
+* `GET /api/auth/me` — Get current logged-in user profile.
 
-### Doctor Directory & Availability (`/api/doctors`)
+### Doctors (`/api/doctors`)
 * `GET /api/doctors` — Search doctors by name, specialty, bio, or symptoms.
-* `GET /api/doctors/{id}` — Get single doctor profile.
-* `GET /api/doctors/{id}/slots?date=YYYY-MM-DD` — Real-time slot availability (checks working hours, booked slots, active holds, leave days, and past time).
+* `GET /api/doctors/{id}` — Get doctor details.
+* `GET /api/doctors/{id}/slots?date=YYYY-MM-DD` — Real-time slot availability (filters booked, held, leave, and past slots).
 
-### Appointment Lifecycle (`/api/appointments`)
-* `POST /api/appointments/hold` — Atomically hold a slot for 5 minutes.
-* `POST /api/appointments/confirm` — Confirm held slot, record symptoms, execute pre-visit Gemini AI triage, and sync calendar.
-* `GET /api/appointments/my` — List all appointments for logged-in patient or doctor.
-* `DELETE /api/appointments/{id}/cancel` — Cancel appointment, release slot, and notify doctor/patient.
-* `GET /api/appointments/ics/{id}` — Download `.ics` iCalendar file.
+### Appointments (`/api/appointments`)
+* `POST /api/appointments/hold` — Reserve a slot for 5 minutes.
+* `POST /api/appointments/confirm` — Confirm booking with symptoms, run AI triage, sync calendar.
+* `GET /api/appointments/my` — Get user's appointment history.
+* `DELETE /api/appointments/{id}/cancel` — Cancel appointment and free up the slot.
+* `GET /api/appointments/ics/{id}` — Download `.ics` file for calendar apps.
 
-### Prescriptions & Follow-ups (`/api/prescriptions`)
-* `POST /api/prescriptions` — Doctor submits diagnosis, medication items, triggers Gemini post-visit translation.
-* `GET /api/prescriptions/my` — Patient retrieves active prescriptions and plain-English medication guidance.
+### Prescriptions (`/api/prescriptions`)
+* `POST /api/prescriptions` — Doctor submits diagnosis and medicines, triggers AI patient translation.
+* `GET /api/prescriptions/my` — Patient views their prescription history.
 
-### Admin Management (`/api/admin`)
-* `POST /api/admin/doctors` — Provision new doctor account and clinical profile.
-* `POST /api/admin/doctors/{id}/leave` — Mark doctor on leave, auto-cancel affected bookings, and send patient notices.
+### Admin (`/api/admin`)
+* `POST /api/admin/doctors` — Add a new doctor profile.
+* `POST /api/admin/doctors/{id}/leave` — Mark doctor leave and auto-notify affected patients.
 
 ---
 
-## 🤖 Gemini AI Prompts & Graceful Fallbacks
+## 🤖 Gemini AI Prompts & Fallback Strategy
 
 ### 1. Pre-Visit Clinical Triage Prompt
 ```text
@@ -236,7 +228,7 @@ You MUST return ONLY a valid JSON object strictly matching this schema with no m
 }
 ```
 
-### 2. Post-Visit Patient-Friendly Summary Prompt
+### 2. Post-Visit Patient Summary Prompt
 ```text
 You are an empathetic healthcare communication specialist.
 Convert these clinical notes into a patient-friendly summary with medication schedule and follow-up steps:
@@ -257,63 +249,58 @@ You MUST return ONLY a valid JSON object strictly matching this schema with no m
 }
 ```
 
-### 3. Graceful Failure & Rate Limit Shield
-* If the Gemini API key is missing, network fails, or rate limits are reached, the system executes an intelligent **Rule-Based Clinical Fallback Engine** (`generateFallbackTriage`) using medical keyword dictionaries so appointments and prescriptions never fail.
+### 3. Graceful Fallbacks & Rate Limit Protection
+* If the Gemini API key is missing or quota is exhausted, the app doesn't crash — it switches to a built-in rule-based fallback engine (`generateFallbackTriage`) using medical keyword parsing to ensure zero downtime.
 
 ---
 
-## 📅 Google Calendar Setup Steps
+## 📅 Google Calendar Setup
 
-The platform supports two complementary calendar integration methods:
+The app offers two ways to sync appointments:
 
-### Method A: Zero-Config Direct ICS & Google Calendar One-Click Links (Active by Default)
-1. When an appointment is confirmed, the backend automatically generates a dynamic Google Calendar Web Intent link (`confirmedAppointment.googleCalendarLink`).
-2. Patients can click **"Add to Google Calendar"** on the confirmation screen or in their dashboard to add the event with pre-filled doctor details, clinic address, and symptoms.
-3. Patients can also click **"Download .ICS File"** to import into Apple Calendar, Outlook, or mobile calendar apps.
+1. **One-Click Web Intent & ICS Download (Active by Default)**:
+   * When an appointment is confirmed, the backend dynamically builds a direct Google Calendar link (`confirmedAppointment.googleCalendarLink`) pre-filled with clinic address, doctor name, and symptoms.
+   * Patients can also click **"Download .ICS File"** to add it to Apple Calendar or Outlook.
 
-### Method B: Google Calendar Service Account API (Optional Direct Sync)
-1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
-2. Create a project and enable the **Google Calendar API**.
-3. Create a **Service Account**, generate a JSON key, and download it.
-4. Set the following environment variables in `.env`:
-   ```env
-   GOOGLE_CALENDAR_ENABLED=true
-   GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY_PATH=/path/to/service-account.json
-   GOOGLE_CALENDAR_ID=primary
-   ```
+2. **Google Service Account Sync (Optional)**:
+   * Enable the Google Calendar API in Google Cloud Console, download your service account key, and configure:
+     ```env
+     GOOGLE_CALENDAR_ENABLED=true
+     GOOGLE_CALENDAR_SERVICE_ACCOUNT_KEY_PATH=/path/to/service-account.json
+     GOOGLE_CALENDAR_ID=primary
+     ```
 
 ---
 
-## 📐 System Design Write-Up (800 Words Max)
+## 📐 System Design
 
 ### 1. Concurrency Control & Double-Booking Prevention
-In high-concurrency medical scheduling, simultaneous booking attempts for the same doctor and time slot create race conditions. CarePulse eliminates double-booking through a **two-phase reservation architecture**:
-1. **Serial Execution & Atomic Hold**: When a patient selects a slot, the backend executes `holdSlot` with `@Transactional(isolation = Isolation.SERIALIZABLE)`. It checks for existing `CONFIRMED` bookings and active unexpired `HELD` entries. If clear, it inserts a new `Appointment` record in `HELD` status with an explicit `hold_expires_at` timestamp ($now + 5\text{ mins}$).
-2. **Deterministic Database Constraints**: A composite uniqueness constraint on `(doctor_id, appointment_date, start_time)` ensures the database itself rejects duplicate overlapping slots at the storage engine level.
-3. **Time-of-Day Validation**: When viewing today's slots, client and server filter out slots where `start_time < LocalTime.now()`, preventing users from booking elapsed morning slots.
+To prevent two patients from booking the same doctor slot at the exact same millisecond, CarePulse uses a **two-phase reservation model**:
+* **Serializable Isolation**: The `holdSlot` endpoint runs with `@Transactional(isolation = Isolation.SERIALIZABLE)`. It checks for existing confirmed bookings and active holds before creating a new `HELD` record with a timestamp of $now + 5\text{ mins}$.
+* **Database Unique Constraints**: A composite constraint on `(doctor_id, appointment_date, start_time)` prevents duplicates at the storage level.
+* **Time Check**: Slots on today's date that have already passed in local time are marked disabled on both frontend and backend.
 
-### 2. Slot Hold Mechanism & Automatic Reclamation
-To avoid locking slots indefinitely when users abandon checkout:
-* **Hold Timer**: Upon holding a slot, the frontend initiates a synchronized 300-second countdown (`HoldTimer.jsx`). If the patient fails to confirm within 5 minutes, the slot is locally unlocked.
-* **Server-Side Reclaim**: When calculating slot availability (`getDoctorSlotsForDate`), any `HELD` slot whose `hold_expires_at < LocalDateTime.now()` is treated as `AVAILABLE` and re-opened for other patients.
-* **Confirm Guard**: During `confirmBooking`, the server validates that `hold_expires_at` has not elapsed. If expired, it flags the status as `CANCELLED` and prompts the user to re-select.
+### 2. Slot Hold Mechanism & Automatic Expiration
+To make sure abandoned bookings don't hold slots forever:
+* **Frontend Countdown**: When holding a slot, `HoldTimer.jsx` starts a synchronized 5-minute countdown.
+* **Lazy Expiration Reclaim**: When slots are queried (`getDoctorSlotsForDate`), any `HELD` slot whose expiration time has passed is treated as `AVAILABLE` so other patients can immediately book it.
+* **Confirm Guard**: If a user submits symptoms after 5 minutes, `confirmBooking` rejects the transaction and marks the hold as `CANCELLED`.
 
-### 3. Doctor Leave Conflict Handling & Patient Protection
-When a doctor emergency or planned leave occurs:
-1. **Cascade Query**: The admin submits `POST /api/admin/doctors/{id}/leave` for a target date.
-2. **Conflict Cancellation**: The system queries all `CONFIRMED` or `HELD` appointments for that doctor on that date, transitions their status to `CANCELLED`, and deletes associated Google Calendar events.
-3. **Proactive Patient Notification**: For each affected booking, the system dispatches high-priority urgent email notifications (`DOCTOR_LEAVE`) explaining the cancellation and providing direct links to reschedule with alternative specialists.
+### 3. Doctor Leave Conflict Handling
+When an admin marks a doctor on leave (`POST /api/admin/doctors/{id}/leave`):
+* The backend searches for all `CONFIRMED` and `HELD` appointments for that doctor on that date.
+* It automatically cancels them and cleans up associated calendar events.
+* It sends an email alert (`DOCTOR_LEAVE`) to each affected patient notifying them of the cancellation with a prompt to reschedule.
 
-### 4. Notification & Email Failure Resilience
-Healthcare reminders and confirmations must never block user transactions:
-* **Decoupled Asynchronous Dispatch**: Email delivery runs in a separate thread pool (`@Async`). A failure in the email transport layer (e.g. SMTP timeout or rate limit) will not abort the database transaction or fail the appointment booking.
-* **Audit Logging & Retry Loop**: Every outgoing notification is persisted in `notification_logs` with statuses: `SENT`, `FAILED`, or `RETRY_PENDING`. A background `SchedulerService` sweeps failed notifications and retries transmission with exponential backoff up to 3 times before dead-letter alerting.
+### 4. Notification & Email Reliability
+* **Async Decoupling**: Emails are dispatched asynchronously (`@Async`) so slow SMTP servers never block booking confirmations.
+* **Audit Logging & Retries**: Every notification is saved in `notification_logs` (`SENT`, `FAILED`, `RETRY_PENDING`). A background scheduler checks for failed emails and retries them automatically.
 
 ---
 
-## 🧪 Automated Testing
+## 🧪 Testing
 
-Run the comprehensive test suite verifying the complete workflow, concurrency holds, doctor leave conflict cancellations, and rate limiting:
+To run the automated tests verifying slot holds, leave conflicts, and rate limiting:
 ```bash
 cd backend
 ./mvnw test
@@ -323,4 +310,4 @@ cd backend
 ---
 
 ## 📄 License
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open-source under the [MIT License](LICENSE).
